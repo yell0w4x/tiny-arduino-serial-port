@@ -1,0 +1,113 @@
+diff -ur original/variant.cpp patched/variant.cpp
+--- original/variant.cpp	2016-02-19 18:57:28.000000000 +0300
++++ patched/variant.cpp	2019-09-06 23:45:29.000000000 +0300
+@@ -318,47 +318,78 @@
+ /*
+  * USART objects
+  */
++#ifndef TINY_HAS_HWSERIAL1
+ RingBuffer rx_buffer2;
++#endif // TINY_HAS_HWSERIAL1
++#ifndef TINY_HAS_HWSERIAL2
+ RingBuffer rx_buffer3;
++#endif // TINY_HAS_HWSERIAL2
++#ifndef TINY_HAS_HWSERIAL3
+ RingBuffer rx_buffer4;
++#endif // TINY_HAS_HWSERIAL3
++#ifndef TINY_HAS_HWSERIAL1
+ RingBuffer tx_buffer2;
++#endif // TINY_HAS_HWSERIAL1
++#ifndef TINY_HAS_HWSERIAL2
+ RingBuffer tx_buffer3;
++#endif // TINY_HAS_HWSERIAL2
++#ifndef TINY_HAS_HWSERIAL3
+ RingBuffer tx_buffer4;
++#endif // TINY_HAS_HWSERIAL3
+ 
++#ifndef TINY_HAS_HWSERIAL1
+ USARTClass Serial1(USART0, USART0_IRQn, ID_USART0, &rx_buffer2, &tx_buffer2);
+ void serialEvent1() __attribute__((weak));
+ void serialEvent1() { }
++#endif // TINY_HAS_HWSERIAL1
++#ifndef TINY_HAS_HWSERIAL2
+ USARTClass Serial2(USART1, USART1_IRQn, ID_USART1, &rx_buffer3, &tx_buffer3);
+ void serialEvent2() __attribute__((weak));
+ void serialEvent2() { }
++#endif // TINY_HAS_HWSERIAL2
++#ifndef TINY_HAS_HWSERIAL3
+ USARTClass Serial3(USART3, USART3_IRQn, ID_USART3, &rx_buffer4, &tx_buffer4);
+ void serialEvent3() __attribute__((weak));
+ void serialEvent3() { }
++#endif // TINY_HAS_HWSERIAL3
++
++#ifndef TINY_HAS_HWSERIAL1
+ 
+ // IT handlers
+ void USART0_Handler(void)
+ {
+   Serial1.IrqHandler();
+ }
++#endif // TINY_HAS_HWSERIAL1
+ 
++#ifndef TINY_HAS_HWSERIAL2
+ void USART1_Handler(void)
+ {
+   Serial2.IrqHandler();
+ }
++#endif // TINY_HAS_HWSERIAL2
+ 
++#ifndef TINY_HAS_HWSERIAL3
+ void USART3_Handler(void)
+ {
+   Serial3.IrqHandler();
+ }
+-
++#endif // TINY_HAS_HWSERIAL3
+ // ----------------------------------------------------------------------------
+ 
+ void serialEventRun(void)
+ {
+   if (Serial.available()) serialEvent();
++
++#ifndef TINY_HAS_HWSERIAL1
+   if (Serial1.available()) serialEvent1();
++#endif // TINY_HAS_HWSERIAL1
++#ifndef TINY_HAS_HWSERIAL2
+   if (Serial2.available()) serialEvent2();
++#endif // TINY_HAS_HWSERIAL2
++#ifndef TINY_HAS_HWSERIAL3
+   if (Serial3.available()) serialEvent3();
++#endif // TINY_HAS_HWSERIAL3
+ }
+ 
+ // ----------------------------------------------------------------------------
+diff -ur original/variant.h patched/variant.h
+--- original/variant.h	2016-05-09 17:53:25.000000000 +0300
++++ patched/variant.h	2019-10-27 21:53:23.000000000 +0300
+@@ -36,7 +36,9 @@
+ #include "Arduino.h"
+ #ifdef __cplusplus
+ #include "UARTClass.h"
+-#include "USARTClass.h"
++#if !defined(TINY_HAS_HWSERIAL1) && !defined(TINY_HAS_HWSERIAL2) && !defined(TINY_HAS_HWSERIAL3)
++# include "USARTClass.h"
++#endif // TINY_HAS_HWSERIAL
+ #endif
+ 
+ #ifdef __cplusplus
+@@ -244,9 +246,15 @@
+ #ifdef __cplusplus
+ 
+ extern UARTClass Serial;
++#ifndef TINY_HAS_HWSERIAL1
+ extern USARTClass Serial1;
++#endif // TINY_HAS_HWSERIAL1
++#ifndef TINY_HAS_HWSERIAL2
+ extern USARTClass Serial2;
++#endif // TINY_HAS_HWSERIAL2
++#ifndef TINY_HAS_HWSERIAL3
+ extern USARTClass Serial3;
++#endif // TINY_HAS_HWSERIAL3
+ 
+ #endif
+ 

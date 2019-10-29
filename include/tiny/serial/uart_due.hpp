@@ -29,8 +29,8 @@ namespace io
 /** The type of the uart. */
 enum port_kind
 {
-	usual, 	  /**< Usual com port.*/
-	extended  /**< 9bit supporting uart.*/
+  usual,   /**< Usual com port.*/
+  extended /**< 9bit supporting uart.*/
 };
 
 /** Comport number. */
@@ -43,12 +43,11 @@ template <port_kind> struct port_kind_traits;
 template <>
 struct port_kind_traits<usual>
 {
-	enum { kind_of_port = static_cast<unsigned int>(usual) };
-	/** Current port kind. */
-	//enum { port_kind = port_kind::usual };
+  /** Current port kind. */
+  enum { kind_of_port = static_cast<unsigned int>(usual) };
 
-	/** The octet_type to be used. */
-	typedef unsigned char octet_type;
+  /** The octet_type to be used. */
+  typedef unsigned char octet_type;
 
   /** Port configuration. */
   enum config
@@ -66,12 +65,11 @@ struct port_kind_traits<usual>
 template <>
 struct port_kind_traits<extended>
 {
-	enum { kind_of_port = static_cast<unsigned int>(extended) };
-	/** Current port kind. */
-	//enum { port_kind = port_kind::extended };
+  /** Current port kind. */
+  enum { kind_of_port = static_cast<unsigned int>(extended) };
 
-	/** The octet_type to be used. */
-	typedef unsigned short octet_type;
+  /** The octet_type to be used. */
+  typedef unsigned short octet_type;
 
   /** Port configuration. */
   enum config
@@ -141,15 +139,12 @@ public:
   /** Buffer size. */
   enum { buffer_size = BufferSize };
 
-//  /** Port kind. */
-//  enum { kind_of_port = kind_traits_type::kind_of_port };
-
 public:
   /** Creates an uart. */
   basic_uart(iocs_registers* regs, irqn_type irqn, uint32_t component_id):
-  	_regs(regs),
-  	_irqn(irqn),
-  	_comp_id(component_id)
+    _regs(regs),
+    _irqn(irqn),
+    _comp_id(component_id)
   {
     // empty
   }
@@ -191,9 +186,6 @@ public:
     // Disable PDC channel
     _regs->US_PTCR = US_PTCR_RXTDIS | US_PTCR_TXTDIS ;
 
-    // Reset and disable receiver and transmitter
-    //_regs->US_CR = US_CR_RSTRX | US_CR_RSTTX | US_CR_RXDIS | US_CR_TXDIS;
-
     // Configure mode
     _regs->US_MR = config;
 
@@ -215,6 +207,7 @@ public:
   /** Closes port. */
   void close(void)
   {
+    // Reset and disable receiver and transmitter
     _regs->US_CR = US_CR_RSTRX | US_CR_RSTTX | US_CR_RXDIS | US_CR_TXDIS;
     _rx_buffer.clear();
     _tx_buffer.clear();
@@ -320,19 +313,19 @@ private:
   //-----------------------------------------------------------------------------
   inline octet_type read_port(void) const
   {
-  	return read_octet();
+    return read_octet();
   }
 
   //-----------------------------------------------------------------------------
   inline void write_port(octet_type word) const
   {
-  	write_octet(word);
+    write_octet(word);
   }
 
   //-----------------------------------------------------------------------------
   inline void enable_rx_int(void) /*const*/
   {
-  	set_bit(_regs->US_IER, US_IER_RXRDY);
+    set_bit(_regs->US_IER, US_IER_RXRDY);
   }
 
   //-----------------------------------------------------------------------------
@@ -410,7 +403,7 @@ private:
     ~tx_lock(void) { _uart->enable_tx_int(); }
 
   private:
-	  basic_uart* _uart;
+    basic_uart* _uart;
   };
 
 private:
@@ -520,20 +513,20 @@ template <> inline basic_uart<extended>& uart_instance<extended, com3>(void)
 template <port_kind Kind, port_num Num>
 struct com_port
 {
-	/** Port kind. */
-	enum { kind_of_port = static_cast<unsigned int>(Kind) };
+  /** Port kind. */
+  enum { kind_of_port = static_cast<unsigned int>(Kind) };
 
-	/** Port number */
-	enum { port_no = static_cast<unsigned int>(Num) };
+  /** Port number */
+  enum { port_no = static_cast<unsigned int>(Num) };
 
-	/** Uart type. */
-	typedef basic_uart<Kind> uart_type;
+  /** Uart type. */
+  typedef basic_uart<Kind> uart_type;
 
-	/** Return the instance of the uart. */
-	static uart_type& instance(void)
-	{
-		return detail::uart_instance<Kind, Num>();
-	}
+  /** Return the instance of the uart. */
+  static uart_type& instance(void)
+  {
+    return detail::uart_instance<Kind, Num>();
+  }
 };
 
 /** 8bit max, com0 type. */
@@ -556,7 +549,7 @@ typedef com_port<extended, com3> extended_port3;
 
 // Serial 0 Arduino doesn't provide it at all, but we do.
 // Note that not all of the SAM MCU have four ports
-// For this port pin A10 and A11 on Arduino board are used
+// For this port pins 52 and 11 on Arduino board are used
 #ifdef TINY_HAS_HWSERIAL0
   inline void init_serial0(void)
   {

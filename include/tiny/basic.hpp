@@ -58,7 +58,7 @@ inline register_type mask(size_t pos) { return mask<register_type>(pos); }
  */
 inline size_t bit(register_ptr r, size_t pos)
 {
-	return *r & (1 << pos);
+  return *r & (1 << pos);
 }
 
 /** Reads the register bit.
@@ -81,13 +81,13 @@ inline size_t bit(register_type r, size_t pos)
 template <typename T>
 inline bool is_bit(T r, size_t pos)
 {
-	return bit(r, pos) != 0;
+  return bit(r, pos) != 0;
 }
 
 /** Sets the register bit. */
 inline void set_bit(register_ptr r, size_t pos)
 {
-	*r |= mask(pos);
+  *r |= mask(pos);
 }
 
 /** Sets the register bit. */
@@ -99,7 +99,7 @@ inline void set_bit(register_type& r, size_t pos)
 /** Clears the register bit. */
 inline void clear_bit(register_ptr r, size_t pos)
 {
-	*r &= ~mask(pos);
+  *r &= ~mask(pos);
 }
 
 /** Clears the register bit. */
@@ -112,18 +112,18 @@ inline void clear_bit(register_type& r, size_t pos)
 template <typename T>
 inline void set_bit(T& r, size_t pos, bool value)
 {
-	if (value) { set_bit(r, pos); } else { clear_bit(r, pos); }
+  if (value) { set_bit(r, pos); } else { clear_bit(r, pos); }
 }
 
 /** Returns the value of bits specified. */
 inline size_t bits_value(register_ptr r, const register_bits_type& mask)
 {
-	register_type msk = static_cast<register_type>(mask.to_ulong());
-	size_t v 					= *r & msk;
+  register_type msk = static_cast<register_type>(mask.to_ulong());
+  size_t v          = *r & msk;
 
-	for (; msk && (msk & 1) == 0; msk >>= 1) { v >>= 1; }
+  for (; msk && (msk & 1) == 0; msk >>= 1) { v >>= 1; }
 
-	return v;
+  return v;
 }
 
 /** Returns the value of bits specified. */

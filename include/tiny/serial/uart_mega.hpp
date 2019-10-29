@@ -27,8 +27,8 @@ namespace io
 /** The type of the uart. */
 enum class port_kind
 {
-	usual, 		/**< Usual com port.*/
-	extended  /**< 9bit supporting uart.*/
+  usual,   /**< Usual com port.*/
+  extended /**< 9bit supporting uart.*/
 };
 
 /** Comport number. */
@@ -41,9 +41,8 @@ template <port_kind> struct port_kind_traits;
 template <>
 struct port_kind_traits<port_kind::usual>
 {
-	enum { kind_of_port = static_cast<unsigned int>(port_kind::usual) };
-	/** Current port kind. */
-	//enum { port_kind = port_kind::usual };
+  /** Current port kind. */
+  enum { kind_of_port = static_cast<unsigned int>(port_kind::usual) };
 
 	/** The octet_type to be used. */
 	typedef unsigned char octet_type;
@@ -64,12 +63,11 @@ struct port_kind_traits<port_kind::usual>
 template <>
 struct port_kind_traits<port_kind::extended>
 {
-	enum { kind_of_port = static_cast<unsigned int>(port_kind::extended) };
-	/** Current port kind. */
-	//enum { port_kind = port_kind::extended };
+  /** Current port kind. */
+  enum { kind_of_port = static_cast<unsigned int>(port_kind::extended) };
 
-	/** The octet_type to be used. */
-	typedef unsigned short octet_type;
+  /** The octet_type to be used. */
+  typedef unsigned short octet_type;
 
   /** Port configuration. */
   enum class config
@@ -151,8 +149,8 @@ template<
 class basic_uart : public serial<typename port_kind_traits<Kind>::octet_type>
 {
 public:
-	/** Port kind traits type. */
-	typedef PortKindTraitsT kind_traits_type;
+  /** Port kind traits type. */
+  typedef PortKindTraitsT kind_traits_type;
 
   /** Control and status register type. */
   typedef ::tiny::register_type register_type;
@@ -175,9 +173,9 @@ public:
 public:
   /** Creates an uart. */
   basic_uart(const iocs_registers& regs):
-  	_regs(regs),
-  	_written(false),
-  	_is_9_bits(false)
+    _regs(regs),
+    _written(false),
+    _is_9_bits(false)
   {
     // empty
   }
@@ -308,7 +306,7 @@ public:
   /** Returns currently configured stop bits. */
   size_t stop_bits(void) const
   {
-  	return int(is_bit(_regs.ucsrc, USBS)) + 1;
+    return int(is_bit(_regs.ucsrc, USBS)) + 1;
   }
 
   /** Returns currently set parity mode. */
@@ -365,7 +363,7 @@ private:
   //-----------------------------------------------------------------------------
   inline void write_ninth_bit(bool value) const
   {
-  	set_bit(_regs.ucsrb, TXB8, value);
+    set_bit(_regs.ucsrb, TXB8, value);
   }
 
   //-----------------------------------------------------------------------------
@@ -557,20 +555,20 @@ template <port_kind Kind, port_num Num> inline basic_uart<Kind>& uart_instance(v
 template <port_kind Kind, port_num Num>
 struct com_port
 {
-	/** Port kind. */
-	enum { kind_of_port = static_cast<unsigned int>(Kind) };
+  /** Port kind. */
+  enum { kind_of_port = static_cast<unsigned int>(Kind) };
 
-	/** Port number */
-	enum { port_no = static_cast<unsigned int>(Num) };
+  /** Port number */
+  enum { port_no = static_cast<unsigned int>(Num) };
 
-	/** Uart type. */
-	typedef basic_uart<Kind> uart_type;
+  /** Uart type. */
+  typedef basic_uart<Kind> uart_type;
 
-	/** Return the instance of the uart. */
-	static uart_type& instance(void)
-	{
-		return detail::uart_instance<Kind, Num>();
-	}
+  /** Return the instance of the uart. */
+  static uart_type& instance(void)
+  {
+    return detail::uart_instance<Kind, Num>();
+  }
 };
 
 /** 8bit max, com0 type. */

@@ -1,4 +1,4 @@
-# Tiny async serial port C++ library for embedded devices with 9nth bit support
+# Tiny async serial port C++ library for Arduino Due with 9nth bit support
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 

@@ -108,11 +108,10 @@ typedef IRQn_Type irqn_type;
 
 /** Serial port.
  *
- *  @tparam BufferItemT The type of buffer item, to make it possible to store
- *    nine bits words.
- *
+ *  @tparam Kind The type of port whether usual or extended see port_kind.
  *  @tparam BufferSize The size of the internal buffer. Use pow of two for
  *    optimizing indexing.
+ *  @tparam PortKindTraits Prot kind traits.
  */
 template<
   port_kind Kind,
@@ -121,8 +120,8 @@ template<
 class basic_uart : public serial<typename port_kind_traits<Kind>::octet_type>
 {
 public:
-	/** Port kind traits type. */
-	typedef PortKindTraitsT kind_traits_type;
+  /** Port kind traits type. */
+  typedef PortKindTraitsT kind_traits_type;
 
   /** Control and status register type. */
   typedef ::tiny::register_type register_type;

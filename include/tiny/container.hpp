@@ -15,9 +15,9 @@
 #include <cstdint>
 
 #ifdef __ICCAVR__
-#	include <cassert>
+# include <cassert>
 #else
-#	include <assert.h>
+# include <assert.h>
 #endif // __ICCAVR__
 
 namespace tiny

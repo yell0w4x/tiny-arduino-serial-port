@@ -136,11 +136,10 @@ struct iocs_registers
 
 /** Serial port.
  *
- *  @tparam BufferItemT The type of buffer item, to make it possible to store
- *    nine bits words.
- *
+ *  @tparam Kind The type of port whether usual or extended see port_kind.
  *  @tparam BufferSize The size of the internal buffer. Use pow of two for
  *    optimizing indexing.
+ *  @tparam PortKindTraits Prot kind traits.
  */
 template<
   port_kind Kind,

@@ -3,7 +3,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 
 The library supports Arduino Due based on SAM3x8e. Also version for Arduino Mega is provided, but it can be outdated.
-Everything below are regarded to Arduino Due. Exceptions for Arduino Mega are noted explicilty.
+Everything below are regarded to Arduino Due and applicable for Mega in most. Exceptions for Arduino Mega are noted explicilty.
 
 ## Patch
 
@@ -17,13 +17,14 @@ For Arduino Mega patch is not provided. It's likely necessary to exclude `Hardwa
 
 Port numbering complies to Arduino library. To make ports avaiable it's necessary to define these. By default 8 bit variant is provided.
 
+`TINY_HAS_HWSERIAL0`
 `TINY_HAS_HWSERIAL1`
 `TINY_HAS_HWSERIAL2`
 `TINY_HAS_HWSERIAL3`
 
 It's recommeded to define them within compiler command line by using `-D` switch like `-DTINY_HAS_HWSERIAL1`. For 9nth bit support use this `-DTINY_HAS_HWSERIAL1=9`.
 
-Also we provide "Serial 0" support. Actually MCU port and Arduino port numbers don't match. Table below describes mappings between these.
+Also we provide "Serial 0" support for Arduino Due. Actually MCU port and Arduino port numbers don't match. Table below describes mappings between these.
 
 Arduino   | Tiny    | SAM3x8e |
 :--------:|:-------:|:-------:|

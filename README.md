@@ -65,6 +65,6 @@ mkdir test-build && cd test-build
 cmake ../test 
 make && ctest
 ```
-Serial port mock is provided via `#include <tiny/serail.hpp>`.
+Serial port mock is provided via `#include <tiny/serial.hpp>`.
 
 

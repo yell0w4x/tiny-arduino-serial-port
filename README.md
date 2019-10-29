@@ -35,7 +35,7 @@ Not provided, pins TXD - 11, RXD - 52 | serial0 | USART2, pins: TXD - PB20, RXD 
 
 Before use `serail0` it's necessary to explicilty call `init_serial0()`. It's made intentionally to avoid accidental configuration override of pins used by port.
 
-To designate in/out buffer queue size to be used by ports define `TINY_SERIAL_DEF_BUF_SIZE`, defaulted to 32.
+To designate in/out buffer queue size to be used by ports define `TINY_SERIAL_DEF_BUF_SIZE`, defaulted to 32 for Due and 16 for Mega.
 
 ## Usage
 

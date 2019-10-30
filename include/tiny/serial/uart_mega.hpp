@@ -139,7 +139,7 @@ struct iocs_registers
  *  @tparam Kind The type of port whether usual or extended see port_kind.
  *  @tparam BufferSize The size of the internal buffer. Use pow of two for
  *    optimizing indexing.
- *  @tparam PortKindTraits Prot kind traits.
+ *  @tparam PortKindTraits Port kind traits.
  */
 template<
   port_kind Kind,
